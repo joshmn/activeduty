@@ -4,8 +4,8 @@
 require_relative '../lib/active_duty/version'
 
 version = ActiveDuty::VERSION
-system("gem build active_duty.gemspec")
-system("gem push auto_previews-#{version}.gem")
-system("rm auto_previews-#{version}.gem")
+system("gem build activeduty.gemspec")
+system("gem push activeduty-#{version}.gem")
+system("rm activeduty-#{version}.gem")
 system("git tag -a v#{version} -m 'version #{version}'")
 system("git push origin v#{version}")
