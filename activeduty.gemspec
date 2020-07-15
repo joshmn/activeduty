@@ -3,7 +3,7 @@ $:.push File.expand_path("lib", __dir__)
 require "active_duty/version"
 
 Gem::Specification.new do |s|
-  s.name        = "active_duty"
+  s.name        = "activeduty"
   s.version     = ActiveDuty::VERSION
   s.summary     = "Service objects."
   s.description = "Service objects."
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.author   = "Josh Brody"
   s.email    = "josh@josh.mn"
-  s.homepage = "https://josh.mn"
+  s.homepage = "https://github.com/joshmn/activeduty"
 
   s.files        = Dir["CHANGELOG.md", "MIT-LICENSE", "README.md", "lib/**/*"]
   s.require_path = "lib"
@@ -22,4 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport"
   s.add_dependency "activemodel"
   s.add_development_dependency "pry"
+  s.add_development_dependency "rake", "~> 12.0"
+  s.add_development_dependency "minitest", "~> 5.0"
+
 end

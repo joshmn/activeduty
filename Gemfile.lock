@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_duty (0.1.0)
+    activeduty (0.1.0)
       activemodel
       activesupport
 
@@ -35,7 +35,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_duty!
+  activeduty!
   minitest (~> 5.0)
   pry
   rake (~> 12.0)
