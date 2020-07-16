@@ -1,5 +1,7 @@
 require 'active_duty/initializers'
 require 'active_duty/run'
+require 'active_duty/boots'
+require 'active_duty/reported'
 require 'active_duty/fail'
 require 'active_duty/success'
 require 'active_duty/callbacks'
@@ -15,8 +17,10 @@ module ActiveDuty
     include Fail
     include Initializers
     include Rollback
-    include Run
+    include Boots
     include Success
+    include Reported
+    include Run
 
     class << self
       alias_method :__new, :new

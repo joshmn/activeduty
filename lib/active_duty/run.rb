@@ -1,8 +1,11 @@
 module ActiveDuty
   module Run
     extend ActiveSupport::Concern
+
+    def run; end
+
     def call(*args)
-      begin #
+      begin
         call!(*args)
       rescue => error
         rollback!
@@ -17,6 +20,8 @@ module ActiveDuty
 
     def call!(*args)
       run(*args)
+      called!(self)
+      deploy_troops!
       self
     end
 
