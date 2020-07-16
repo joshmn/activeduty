@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    activeduty (0.1.0)
+    activeduty (0.1.1)
       activemodel
       activesupport
 
