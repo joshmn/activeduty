@@ -1,6 +1,7 @@
 require "active_duty/version"
 
 require "active_support"
+require "active_support/core_ext"
 require "active_model"
 
 module ActiveDuty
