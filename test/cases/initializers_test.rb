@@ -14,4 +14,23 @@ class InitializersTest < ActiveSupport::TestCase
     assert_equal"Josh", service.name
     assert_equal 123, service.number
   end
+
+  class InitWithHashDefaultArgumentsDuty < ActiveDuty::Base
+    init_with name: ["Josh", :name]
+  end
+
+  test "initializes with kwargs with defaults" do
+    service = InitWithHashDefaultArgumentsDuty.new
+    assert_equal "Josh", service.name
+  end
+
+  class InitWithArrayDefaultArgumentsDuty < ActiveDuty::Base
+    init_with :age, [:name, "Josh"], [:options, {}]
+  end
+
+  test "initializes with ordered args with defaults" do
+    service = InitWithArrayDefaultArgumentsDuty.new(123)
+    assert_equal "Josh", service.name
+    assert_equal 123, service.age
+  end
 end

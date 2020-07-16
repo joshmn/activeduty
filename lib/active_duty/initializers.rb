@@ -4,13 +4,11 @@ module ActiveDuty
     module ClassMethods
       def init_with(*args)
         kwargs = args.extract_options!
-
         if kwargs.empty?
           init_from_ordered(args)
         else
           init_from_kw(kwargs)
         end
-
       end
 
       private
@@ -29,12 +27,38 @@ module ActiveDuty
       #   @email = email
       #   @options = options
       def init_from_ordered(args)
-        define_method :initialize do |*initialize_args|
-          args.zip(initialize_args) do |name, value|
-            instance_variable_set("@#{name}", value)
+        init_string = []
+        args.each do |arg|
+          str = ""
+          if arg.is_a?(Array)
+            if arg.size == 2
+              if arg[1].is_a?(String)
+                str << "#{arg[0]} = \"#{arg[1]}\""
+              else
+                str << "#{arg[0]} = #{arg[1]}"
+              end
+            else
+              str << "#{arg[0]}"
+            end
+          else
+            str << "#{arg}"
           end
-          self.class.attr_reader *args
+          init_string << str
         end
+        class_eval <<-METHOD, __FILE__, __LINE__ + 1
+            def initialize(#{init_string.join(', ')})
+              #{args.map { |arg|
+          if arg.is_a?(Array)
+            "instance_variable_set(:\"@#{arg[0]}\", #{arg[0]}) 
+                  self.class.attr_reader :#{arg[0]}"
+          else
+            "instance_variable_set(:\"@#{arg}\", #{arg}) 
+                  self.class.attr_reader :#{arg}"
+          end
+        }.join("\n")
+        }
+            end
+        METHOD
       end
 
       # Initialize with keyword args.
@@ -47,8 +71,21 @@ module ActiveDuty
       #   def initialize(username: "Bob")
       #     @user = username
       def init_from_kw(args)
+
+        initializer_string = []
+        args.each do |key, values|
+          str = "#{key}:"
+          if values.is_a?(Array) && values.size == 2
+            if values[0].is_a?(String)
+              str += " \"#{values[0]}\""
+            else
+              str += "#{values[0]}"
+            end
+          end
+          initializer_string << str
+        end
         class_eval <<-METHOD, __FILE__, __LINE__ + 1
-            def initialize(#{args.map { |key, values| "#{key}: #{values[0] if values.is_a?(Array)}" }.join(', ')})
+            def initialize(#{initializer_string.join(', ')})
               #{args.map { |key, values|
           if values.is_a?(Array)
             "instance_variable_set(:\"@#{values[1]}\", #{key}) 

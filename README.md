@@ -38,11 +38,11 @@ end
 
 ## Advanced usage 
 
-### `init_with` 
+### init_with
 
 A DSL for initializing.
 
-#### Traditional arguments
+#### Ordered arguments
 
 ```
 class AuthenticateUser < ActiveDuty::Base 
@@ -75,6 +75,44 @@ Is the equivalent of:
 class AuthenticateUser < ActiveDuty::Base 
   attr_reader :username, :password 
   def initialize(uname:, pw:)
+    @username, @password = uname, pw 
+  end 
+end 
+```
+
+#### Defaults 
+
+```
+class AuthenticateUser < ActiveDuty::Base 
+  init_with :username, [:password, nil] 
+end 
+```
+
+Is the equivalent of:
+
+```
+class AuthenticateUser < ActiveDuty::Base 
+  attr_reader :username, :password 
+  def initialize(username, password = nil)
+    @username, @password = username, password 
+  end 
+end 
+```
+
+#### Keyword arguments 
+
+```
+class AuthenticateUser < ActiveDuty::Base 
+  init_with uname: [nil, :username], pw: ["good-password", :password]
+end 
+```
+
+Is the equivalent of:
+
+```
+class AuthenticateUser < ActiveDuty::Base 
+  attr_reader :username, :password 
+  def initialize(uname: nil, pw: "good-password")
     @username, @password = uname, pw 
   end 
 end 
