@@ -155,3 +155,17 @@ end
 ### Failing 
 
 Need to fail? Call `fail!`
+
+### Sequential calls
+
+Want to run service after service?
+
+```
+class ServiceTwo < ActiveDuty::Base; end 
+class ServiceThree < ActiveDuty::Base; end 
+class ServiceOne < ActiveDuty::Base 
+  boots ServiceTwo, ServiceThree
+end 
+```
+
+They won't take arguments at this time. 
