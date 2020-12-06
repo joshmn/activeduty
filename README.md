@@ -26,7 +26,7 @@ end
 
 Usage: 
 
-```
+```ruby
 service = AuthenticateUser.new("josh@example.com", password: "password")
 service.call 
 if service.success?
@@ -44,7 +44,7 @@ A DSL for initializing.
 
 #### Ordered arguments
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   init_with :username, :password 
 end 
@@ -52,7 +52,7 @@ end
 
 Is the equivalent of:
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   attr_reader :username, :password 
   def initialize(username, password)
@@ -63,7 +63,7 @@ end
 
 #### Keyword arguments 
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   init_with uname: :username, pw: :password  
 end 
@@ -71,7 +71,7 @@ end
 
 Is the equivalent of:
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   attr_reader :username, :password 
   def initialize(uname:, pw:)
@@ -82,7 +82,7 @@ end
 
 #### Defaults 
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   init_with :username, [:password, nil] 
 end 
@@ -90,7 +90,7 @@ end
 
 Is the equivalent of:
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   attr_reader :username, :password 
   def initialize(username, password = nil)
@@ -101,7 +101,7 @@ end
 
 #### Keyword arguments 
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   init_with uname: [nil, :username], pw: ["good-password", :password]
 end 
@@ -109,7 +109,7 @@ end
 
 Is the equivalent of:
 
-```
+```ruby
 class AuthenticateUser < ActiveDuty::Base 
   attr_reader :username, :password 
   def initialize(uname: nil, pw: "good-password")
@@ -160,7 +160,7 @@ Need to fail? Call `fail!`
 
 Want to run service after service?
 
-```
+```ruby
 class ServiceTwo < ActiveDuty::Base; end 
 class ServiceThree < ActiveDuty::Base; end 
 class ServiceOne < ActiveDuty::Base 
